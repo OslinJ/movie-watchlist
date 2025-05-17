@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Movie Watchlist</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f8ff; /* Light blue background */
+        }
+    </style>
+
+</head>
+<body>
+
+<h1>🎬 My Movie Watchlist</h1>
+
+<!-- 🎯 Search Form -->
+<form th:action="@{/search}" method="post">
+    <input type="text" name="title" placeholder="Search for a movie..." required />
+    <button type="submit">Add</button>
+</form>
+
+<!-- 📃 Movie List -->
+<div th:each="movie : ${movies}" class="movie">
+    <h3 th:text="${movie.title}"></h3>
+    <img th:src="${movie.posterUrl}" alt="Poster" />
+
+    <!-- ✅ Watched status toggle -->
+    <form th:action="@{/toggle}" method="post" style="margin-top: 10px;">
+        <input type="hidden" name="id" th:value="${movie.id}" />
+        <button type="submit" th:text="${movie.watched} ? 'Mark as Unwatched' : 'Mark as Watched'"></button>
+    </form>
+</div>
+
+</body>
+</html>
